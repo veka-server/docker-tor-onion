@@ -2,13 +2,9 @@
 
 set -eu
 
+TOR_DATA_DIR=/var/lib/tor
+HIDDEN_SERVICE_DIR=/var/lib/tor/hidden_service
 TORRC=/etc/tor/torrc
-
-mkdir -p "$TOR_DATA_DIR"
-mkdir -p "$HIDDEN_SERVICE_DIR"
-
-chown -R tor:tor "$TOR_DATA_DIR"
-chmod 700 "$HIDDEN_SERVICE_DIR"
 
 cat > "$TORRC" <<EOF
 Log ${LOG_LEVEL} stdout
