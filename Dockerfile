@@ -15,6 +15,9 @@ RUN apk add --no-cache tor ca-certificates gosu \
 COPY docker-entrypoint.sh /
 COPY healthcheck.sh /
 
+RUN sed -i 's/\r//' /docker-entrypoint.sh /healthcheck.sh \
+    && chmod +x /docker-entrypoint.sh /healthcheck.sh
+
 RUN chmod +x /docker-entrypoint.sh && chmod +x /healthcheck.sh
 
 HEALTHCHECK \
