@@ -68,13 +68,14 @@ cat "$TORRC"
 echo "==========================="
 
 if [ "${PRINT_HOSTNAME:-false}" = "true" ]; then
-    # Attendre que Tor génère le hostname
-    while [ ! -f "$HIDDEN_SERVICE_DIR/hostname" ]; do
-        sleep 1
-    done
-    echo "==============================="
-    echo "Onion address: $(cat $HIDDEN_SERVICE_DIR/hostname)"
-    echo "==============================="
+    (
+        while [ ! -f "$HIDDEN_SERVICE_DIR/hostname" ]; do
+            sleep 1
+        done
+        echo "==============================="
+        echo "Onion address: $(cat $HIDDEN_SERVICE_DIR/hostname)"
+        echo "==============================="
+    ) &
 fi
 
 exec gosu tor tor -f "$TORRC"
