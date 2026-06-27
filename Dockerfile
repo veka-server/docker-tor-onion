@@ -1,10 +1,10 @@
-FROM alpine:latest
+FROM alpine:3.21
 
 ENV LOG_LEVEL=notice \
     HIDDEN_SERVICE_VERSION=3 \
     PRINT_HOSTNAME=true
 
-RUN apk add --no-cache tor ca-certificates gosu \
+RUN apk add --no-cache tor ca-certificates \
     && rm -rf /var/cache/apk/* \
     && mkdir -p /etc/tor /var/lib/tor/hidden_service /root/.ssh \
     && chown -R tor:tor /var/lib/tor \
@@ -21,5 +21,7 @@ HEALTHCHECK \
     --timeout=5s \
     --start-period=20s \
     CMD /healthcheck.sh
+
+USER tor
 
 ENTRYPOINT ["/docker-entrypoint.sh"]

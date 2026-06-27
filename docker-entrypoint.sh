@@ -74,4 +74,4 @@ if [ "${PRINT_HOSTNAME:-false}" = "true" ]; then
     ) &
 fi
 
-exec gosu tor tor -f "$TORRC"
+exec tor -f "$TORRC"
