@@ -12,8 +12,8 @@ RUN apk add --no-cache tor ca-certificates gosu \
     && mkdir -p /etc/tor /var/lib/tor /root/.ssh \
     && chmod 700 /root/.ssh
 
-COPY docker-entrypoint.sh /usr/local/bin/
-COPY healthcheck.sh /usr/local/bin/
+COPY docker-entrypoint.sh /
+COPY healthcheck.sh /
 
 RUN chmod +x /usr/local/bin/*
 
@@ -21,6 +21,6 @@ HEALTHCHECK \
     --interval=30s \
     --timeout=5s \
     --start-period=20s \
-    CMD /usr/local/bin/healthcheck.sh
+    CMD /healthcheck.sh
 
-ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
