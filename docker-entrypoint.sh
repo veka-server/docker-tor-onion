@@ -1,13 +1,13 @@
 #!/bin/sh
 
-set -Eeuo pipefail
+set -eu
 
 TORRC=/etc/tor/torrc
 
 mkdir -p "$TOR_DATA_DIR"
 mkdir -p "$HIDDEN_SERVICE_DIR"
 
-chown -R alpine-tor:alpine-tor "$TOR_DATA_DIR"
+chown -R tor:tor "$TOR_DATA_DIR"
 
 cat > "$TORRC" <<EOF
 Log ${LOG_LEVEL} stdout
@@ -25,7 +25,7 @@ EOF
 # Single service
 ########################################
 
-if [[ -n "${TARGET_HOST:-}" ]]; then
+if [ -n "${TARGET_HOST:-}" ]; then
 
     TARGET_PORT="${TARGET_PORT:-80}"
     ONION_PORT="${ONION_PORT:-80}"
@@ -38,20 +38,19 @@ fi
 # Multiple services
 ########################################
 
-if [[ -n "${HIDDEN_SERVICE_PORTS:-}" ]]; then
+if [ -n "${HIDDEN_SERVICE_PORTS:-}" ]; then
 
-while read LINE
-do
+    echo "$HIDDEN_SERVICE_PORTS" | while read -r LINE; do
 
-    [[ -z "$LINE" ]] && continue
+        [ -z "$LINE" ] && continue
 
-    ONION=$(echo "$LINE" | cut -d: -f1)
-    HOST=$(echo "$LINE" | cut -d: -f2)
-    PORT=$(echo "$LINE" | cut -d: -f3)
+        ONION=$(echo "$LINE" | cut -d: -f1)
+        HOST=$(echo "$LINE"  | cut -d: -f2)
+        PORT=$(echo "$LINE"  | cut -d: -f3)
 
-    echo "HiddenServicePort ${ONION} ${HOST}:${PORT}" >> "$TORRC"
+        echo "HiddenServicePort ${ONION} ${HOST}:${PORT}" >> "$TORRC"
 
-done <<< "$HIDDEN_SERVICE_PORTS"
+    done
 
 fi
 
@@ -59,7 +58,7 @@ fi
 # Extra Tor configuration
 ########################################
 
-if [[ -n "${TOR_EXTRA_CONFIG:-}" ]]; then
+if [ -n "${TOR_EXTRA_CONFIG:-}" ]; then
     echo "$TOR_EXTRA_CONFIG" >> "$TORRC"
 fi
 
@@ -67,4 +66,4 @@ echo "========== torrc =========="
 cat "$TORRC"
 echo "==========================="
 
-exec gosu alpine-tor tor -f "$TORRC"
+exec gosu tor tor -f "$TORRC"
