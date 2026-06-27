@@ -114,6 +114,9 @@ services:
         HiddenServiceNonAnonymousMode 0
         HiddenServiceSingleHopMode 0
         SocksPort 0
+        HiddenServiceEnableIntroDoSDefense 1
+        HiddenServiceEnableIntroDoSRatePerSec 25
+        HiddenServiceEnableIntroDoSBurstPerSec 200
     volumes:
       - ./tor-hidden-service:/var/lib/tor/hidden_service
     security_opt:
