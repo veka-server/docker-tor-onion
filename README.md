@@ -47,7 +47,7 @@ networks:
 ```yaml
 services:
   onion:
-    image: ghcr.io/veka-server/docker-tor-onion:main
+    image: ghcr.io/veka-server/docker-tor-onion:latest
     environment:
       HIDDEN_SERVICE_PORTS: |
         80:your-service:80
