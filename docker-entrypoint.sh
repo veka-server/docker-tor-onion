@@ -8,6 +8,7 @@ mkdir -p "$TOR_DATA_DIR"
 mkdir -p "$HIDDEN_SERVICE_DIR"
 
 chown -R tor:tor "$TOR_DATA_DIR"
+chmod 700 "$HIDDEN_SERVICE_DIR"
 
 cat > "$TORRC" <<EOF
 Log ${LOG_LEVEL} stdout
