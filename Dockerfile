@@ -6,9 +6,9 @@ ENV LOG_LEVEL=notice \
 
 RUN apk add --no-cache tor ca-certificates \
     && rm -rf /var/cache/apk/* \
-    && mkdir -p /etc/tor /var/lib/tor/hidden_service /root/.ssh \
+    && mkdir -p /var/lib/tor/hidden_service \
     && chown -R tor:tor /var/lib/tor \
-    && chmod 700 /var/lib/tor/hidden_service /root/.ssh
+    && chmod 700 /var/lib/tor/hidden_service
 
 COPY docker-entrypoint.sh /
 COPY healthcheck.sh /

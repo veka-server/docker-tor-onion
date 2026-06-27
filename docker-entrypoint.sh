@@ -4,7 +4,7 @@ set -eu
 
 TOR_DATA_DIR=/var/lib/tor
 HIDDEN_SERVICE_DIR=/var/lib/tor/hidden_service
-TORRC=/etc/tor/torrc
+TORRC=/var/lib/tor/torrc
 
 cat > "$TORRC" <<EOF
 Log ${LOG_LEVEL} stdout
