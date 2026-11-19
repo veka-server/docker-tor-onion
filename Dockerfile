@@ -1,4 +1,4 @@
-FROM alpine:3.21
+FROM alpine:3.latest
 
 ENV LOG_LEVEL=notice \
     HIDDEN_SERVICE_VERSION=3 \
